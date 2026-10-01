@@ -24,7 +24,7 @@ jobs:
         run: poetry install --no-root
 
       - name: Run Black
-        run: poetry run black --check src tests
+        run: poetry run black --check --target-version py312 src tests
 
       - name: Run Ruff
         run: poetry run python -m ruff check src tests
