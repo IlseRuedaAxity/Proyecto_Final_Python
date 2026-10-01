@@ -50,10 +50,7 @@ class SQLAlchemyOrderRepository:
 
     async def get_all(self, limit: int = 25, offset: int = 0) -> List[Order]:
         stmt = (
-            select(OrderModel)
-            .options(selectinload(OrderModel.items))
-            .limit(limit)
-            .offset(offset)
+            select(OrderModel).options(selectinload(OrderModel.items)).limit(limit).offset(offset)
         )
         result = await self._session.execute(stmt)
         return [self._to_entity(m) for m in result.scalars().all()]
