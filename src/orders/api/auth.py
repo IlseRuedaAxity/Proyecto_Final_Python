@@ -8,7 +8,10 @@ from jose import JWTError, jwt
 
 from src.orders.config import settings
 
+from fastapi.security import OAuth2PasswordBearer, HTTPBearer, HTTPAuthorizationCredentials
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/token")
+bearer_scheme = HTTPBearer(auto_error=False)
 
 
 def hash_password(password: str) -> str:
@@ -33,14 +36,21 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
     return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
 
 
-async def get_current_user(token: str = Depends(oauth2_scheme)) -> dict:
+async def get_current_user(
+    token: str = Depends(oauth2_scheme),
+    bearer: HTTPAuthorizationCredentials = Depends(bearer_scheme),
+) -> dict:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Token inválido o expirado",
         headers={"WWW-Authenticate": "Bearer"},
     )
+    # Tomar token de cualquiera de los dos esquemas
+    actual_token = token or (bearer.credentials if bearer else None)
+    if not actual_token:
+        raise credentials_exception
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        payload = jwt.decode(actual_token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         username: str = payload.get("sub")
         if username is None:
             raise credentials_exception
