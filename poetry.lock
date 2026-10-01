@@ -1953,6 +1953,7 @@ files = [
 
 [package.dependencies]
 pytest = ">=8.4,<10"
+typing-extensions = {version = ">=4.12", markers = "python_version < \"3.13\""}
 
 [package.extras]
 docs = ["sphinx (>=5.3)", "sphinx-rtd-theme (>=1)", "sphinx-tabs (>=3.5)"]
@@ -2609,6 +2610,7 @@ files = [
 
 [package.dependencies]
 anyio = ">=4.0.0,<5"
+typing-extensions = {version = ">=4.10.0", markers = "python_version < \"3.13\""}
 
 [package.extras]
 full = ["httpx (>=0.27.0,<0.29.0)", "httpx2 (>=2.0.0)", "itsdangerous", "jinja2", "opentelemetry-api", "python-multipart (>=0.0.18)", "pyyaml"]
@@ -3034,5 +3036,5 @@ files = [
 
 [metadata]
 lock-version = "2.1"
-python-versions = ">=3.14"
-content-hash = "4b59c17cd1734a9da29ee496a509812cd551618a75c30f6dd9ecb57254392ec6"
+python-versions = ">=3.12"
+content-hash = "ae151de13b44b2d016a2fc57b7805df746ff215da8922834308ff454c3771379"
