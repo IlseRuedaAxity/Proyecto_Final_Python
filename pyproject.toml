@@ -2,6 +2,7 @@
 name = "proyecto-final"
 version = "0.1.0"
 description = "Servicio de Orders con Arquitectura Hexagonal"
+package-mode = false
 authors = [
     {name = "Your Name",email = "you@example.com"}
 ]
